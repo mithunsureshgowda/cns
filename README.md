@@ -8,14 +8,14 @@ set n0 [$ns node]
 set n1 [$ns node] 
 set n2 [$ns node] 
 set n3 [$ns node]
-# Give color to packets
+
 $ns color 1 "red"
 $ns color 2 "blue"
 $n0 label "Source/udp0"
 $n1 label "Source/udp1"
 $n2 label "Router"
 $n3 label "Destination/Null"
-#Vary the below Bandwidth & see the number of packets dropped
+
 $ns duplex-link $n0 $n2 10Mb 300ms DropTail
 $ns duplex-link $n1 $n2 10Mb 300ms DropTail
 $ns duplex-link $n2 $n3 1Mb 300ms DropTail 
@@ -34,16 +34,14 @@ set udp1 [new Agent/UDP]
 $ns attach-agent $n1 $udp1
 set cbr1 [new Application/Traffic/CBR]
 $cbr1 attach-agent $udp1
-# Set the udp0 packets to red & udp1 packets to blue color
+
 $udp0 set class_ 1
 $udp1 set class_ 2
 #To connect the agents
 $ns connect $udp0 $null
 $ns connect $udp1 $null
-# Set packet size to 500
+
 $cbr1 set packetSize_ 500Mb
-# Set the interval of the packets: Data rate of the packets, if the data rate is high then packetsm 
-drops are high
 $cbr1 set interval_ 0.005 
 proc finish {} {
 global ns nf tf
